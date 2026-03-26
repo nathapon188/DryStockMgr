@@ -1,0 +1,5 @@
+{
+  "name": "Dry Stock Order Manager",
+  "description": "An application to manage and generate text-based dry stock orders for easy sharing.",
+  "requestFramePermissions": []
+}
