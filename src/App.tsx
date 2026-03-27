@@ -1,19 +1,31 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Clipboard, ClipboardCheck, Trash2, Send, Search } from 'lucide-react';
-import { DRY_STOCK_ITEMS } from './constants';
+import { Clipboard, ClipboardCheck, Trash2, Send, Search, Package, Leaf, Box } from 'lucide-react';
+import { DRY_STOCK_ITEMS, PACKAGING_ITEMS, FRESH_PRODUCE_ITEMS } from './constants';
+
+type TabType = 'dry-stock' | 'packaging' | 'fresh-produce';
 
 export default function App() {
+  const [activeTab, setActiveTab] = useState<TabType>('dry-stock');
   const [quantities, setQuantities] = useState<Record<string, string>>({});
   const [generatedText, setGeneratedText] = useState<string>('');
   const [isCopied, setIsCopied] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const currentItems = useMemo(() => {
+    switch (activeTab) {
+      case 'dry-stock': return DRY_STOCK_ITEMS;
+      case 'packaging': return PACKAGING_ITEMS;
+      case 'fresh-produce': return FRESH_PRODUCE_ITEMS;
+      default: return [];
+    }
+  }, [activeTab]);
+
   const filteredItems = useMemo(() => {
-    return DRY_STOCK_ITEMS.filter(item =>
+    return currentItems.filter(item =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [searchTerm]);
+  }, [currentItems, searchTerm]);
 
   const handleQuantityChange = (id: string, value: string) => {
     setQuantities(prev => ({
@@ -23,7 +35,8 @@ export default function App() {
   };
 
   const generateOrder = () => {
-    const orderLines = DRY_STOCK_ITEMS
+    const tabTitle = activeTab === 'dry-stock' ? 'Dry Stock' : activeTab === 'packaging' ? 'Packaging' : 'Fresh Produce';
+    const orderLines = currentItems
       .filter(item => {
         const qty = quantities[item.id];
         return qty && qty !== '-' && qty !== '0' && qty.trim() !== '';
@@ -31,11 +44,11 @@ export default function App() {
       .map(item => `${item.name}: ${quantities[item.id]} ${item.unit}`);
 
     if (orderLines.length === 0) {
-      setGeneratedText('No items selected for the order.');
+      setGeneratedText(`No items selected for the ${tabTitle} order.`);
       return;
     }
 
-    const header = "Dry Stock Order\n-------------------\n";
+    const header = `${tabTitle} Order\n-------------------\n`;
     const footer = "\n-------------------\nThank you,\nNat";
     setGeneratedText(header + orderLines.join('\n') + footer);
   };
@@ -51,20 +64,30 @@ export default function App() {
   };
 
   const clearAll = () => {
-    if (window.confirm('Are you sure you want to clear all quantities?')) {
-      setQuantities({});
+    if (window.confirm(`Are you sure you want to clear all quantities for ${activeTab}?`)) {
+      const newQuantities = { ...quantities };
+      currentItems.forEach(item => {
+        delete newQuantities[item.id];
+      });
+      setQuantities(newQuantities);
       setGeneratedText('');
     }
   };
 
+  const tabs = [
+    { id: 'dry-stock' as TabType, label: 'Dry Stock', icon: Box },
+    { id: 'packaging' as TabType, label: 'Packaging', icon: Package },
+    { id: 'fresh-produce' as TabType, label: 'Fresh Produce', icon: Leaf },
+  ];
+
   return (
     <div className="min-h-screen bg-[#F5F5F0] text-[#141414] font-sans p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <header className="mb-8 border-b border-[#141414] pb-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <h1 className="font-serif italic text-4xl mb-1">Tamrab Thai</h1>
-            <p className="text-xs uppercase tracking-widest opacity-60 font-mono">Dry Stock Order Manager</p>
+            <p className="text-xs uppercase tracking-widest opacity-60 font-mono">Order Manager</p>
           </div>
           <div className="flex gap-2">
             <button
@@ -72,10 +95,32 @@ export default function App() {
               className="flex items-center gap-2 px-4 py-2 border border-[#141414] hover:bg-[#141414] hover:text-[#F5F5F0] transition-colors text-sm uppercase tracking-wider cursor-pointer"
             >
               <Trash2 size={16} />
-              Clear
+              Clear Tab
             </button>
           </div>
         </header>
+
+        {/* Tabs */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setActiveTab(tab.id);
+                setSearchTerm('');
+                setGeneratedText('');
+              }}
+              className={`flex items-center gap-2 px-6 py-3 border border-[#141414] transition-all uppercase tracking-widest text-xs font-bold cursor-pointer ${
+                activeTab === tab.id 
+                  ? 'bg-[#141414] text-[#F5F5F0] shadow-[4px_4px_0px_0px_rgba(20,20,20,0.2)]' 
+                  : 'bg-white hover:bg-[#E4E3E0]'
+              }`}
+            >
+              <tab.icon size={16} />
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* List Section */}
@@ -84,7 +129,7 @@ export default function App() {
               <Search size={18} className="opacity-50" />
               <input
                 type="text"
-                placeholder="SEARCH ITEMS..."
+                placeholder={`SEARCH ${activeTab.replace('-', ' ').toUpperCase()}...`}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="bg-transparent border-none outline-none w-full text-sm font-mono uppercase tracking-tight"
@@ -98,25 +143,35 @@ export default function App() {
                 <div className="p-2 text-center">Unit</div>
               </div>
               
-              {filteredItems.map((item) => (
-                <div key={item.id} className="grid grid-cols-[1fr_80px_80px] border-b border-[#141414] hover:bg-[#F5F5F0] transition-colors group">
-                  <div className="p-3 text-sm border-r border-[#141414] flex items-center">
-                    {item.name}
-                  </div>
-                  <div className="p-0 border-r border-[#141414]">
-                    <input
-                      type="text"
-                      placeholder="-"
-                      value={quantities[item.id] || ''}
-                      onChange={(e) => handleQuantityChange(item.id, e.target.value)}
-                      className="w-full h-full p-3 text-center text-sm font-mono focus:bg-[#141414] focus:text-[#F5F5F0] outline-none transition-colors"
-                    />
-                  </div>
-                  <div className="p-3 text-[10px] uppercase tracking-tighter opacity-60 font-mono text-center flex items-center justify-center">
-                    {item.unit}
-                  </div>
-                </div>
-              ))}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {filteredItems.map((item) => (
+                    <div key={item.id} className="grid grid-cols-[1fr_80px_80px] border-b border-[#141414] hover:bg-[#F5F5F0] transition-colors group">
+                      <div className="p-3 text-sm border-r border-[#141414] flex items-center">
+                        {item.name}
+                      </div>
+                      <div className="p-0 border-r border-[#141414]">
+                        <input
+                          type="text"
+                          placeholder="-"
+                          value={quantities[item.id] || ''}
+                          onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                          className="w-full h-full p-3 text-center text-sm font-mono focus:bg-[#141414] focus:text-[#F5F5F0] outline-none transition-colors"
+                        />
+                      </div>
+                      <div className="p-3 text-[10px] uppercase tracking-tighter opacity-60 font-mono text-center flex items-center justify-center">
+                        {item.unit}
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
               {filteredItems.length === 0 && (
                 <div className="p-8 text-center opacity-40 italic font-serif">No items found matching your search.</div>
               )}
@@ -128,7 +183,7 @@ export default function App() {
                 className="w-full py-3 bg-[#141414] text-[#F5F5F0] uppercase tracking-[0.2em] font-bold hover:bg-[#333] transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send size={18} />
-                Generate Order
+                Generate {activeTab.replace('-', ' ')} Order
               </button>
             </div>
           </section>
@@ -188,9 +243,9 @@ export default function App() {
             <div className="bg-[#E4E3E0] p-4 border border-[#141414] text-[11px] font-mono leading-tight">
               <p className="uppercase font-bold mb-2">Instructions:</p>
               <ul className="list-disc list-inside space-y-1 opacity-70">
+                <li>Select a tab (Dry Stock, Packaging, or Fresh Produce).</li>
                 <li>Enter quantities in the center column.</li>
                 <li>Items with empty, "0", or "-" values will be excluded.</li>
-                <li>Use the search bar to quickly find specific items.</li>
                 <li>Click "Generate Order" to format the list for messaging.</li>
                 <li>Copy the result and paste it into your messaging app.</li>
               </ul>
