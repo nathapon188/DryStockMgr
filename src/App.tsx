@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Clipboard, ClipboardCheck, Trash2, Send, Search, Package, Leaf, Box } from 'lucide-react';
 import { DRY_STOCK_ITEMS, PACKAGING_ITEMS, FRESH_PRODUCE_ITEMS } from './constants';
@@ -7,8 +7,15 @@ type TabType = 'dry-stock' | 'packaging' | 'fresh-produce';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('dry-stock');
-  const [quantities, setQuantities] = useState<Record<string, string>>({});
+  const [quantities, setQuantities] = useState<Record<string, string>>(() => {
+    const saved = localStorage.getItem('tamrab_thai_quantities');
+    return saved ? JSON.parse(saved) : {};
+  });
   const [generatedText, setGeneratedText] = useState<string>('');
+
+  useEffect(() => {
+    localStorage.setItem('tamrab_thai_quantities', JSON.stringify(quantities));
+  }, [quantities]);
   const [isCopied, setIsCopied] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
