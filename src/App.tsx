@@ -35,9 +35,11 @@ export default function App() {
   }, [currentItems, searchTerm]);
 
   const handleQuantityChange = (id: string, value: string) => {
+    // Allow only numbers, decimal point, and "-"
+    const sanitizedValue = value.replace(/[^0-9.-]/g, '');
     setQuantities(prev => ({
       ...prev,
-      [id]: value
+      [id]: sanitizedValue
     }));
   };
 
@@ -71,10 +73,10 @@ export default function App() {
   };
 
   const clearAll = () => {
-    if (window.confirm(`Are you sure you want to clear all quantities for ${activeTab}?`)) {
+    if (window.confirm(`Are you sure you want to reset all quantities for ${activeTab} to "-"?`)) {
       const newQuantities = { ...quantities };
       currentItems.forEach(item => {
-        delete newQuantities[item.id];
+        newQuantities[item.id] = '-';
       });
       setQuantities(newQuantities);
       setGeneratedText('');
@@ -102,7 +104,7 @@ export default function App() {
               className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 border border-[#026877] hover:bg-[#026877] hover:text-[#F5F5F0] transition-colors text-[10px] md:text-sm uppercase tracking-wider cursor-pointer"
             >
               <Trash2 size={14} />
-              Clear Tab
+              Reset Tab
             </button>
           </div>
         </header>
@@ -166,11 +168,11 @@ export default function App() {
                       <div className="p-0 border-r border-[#026877]">
                         <input
                           type="text"
-                          inputMode="text"
+                          inputMode="decimal"
                           placeholder="-"
                           value={quantities[item.id] || ''}
                           onChange={(e) => handleQuantityChange(item.id, e.target.value)}
-                          className="w-full h-full p-2 md:p-3 text-center text-xs md:text-sm font-mono focus:bg-[#026877] focus:text-[#F5F5F0] outline-none transition-colors"
+                          className="w-full h-full p-2 md:p-3 text-center text-base md:text-sm font-mono focus:bg-[#026877] focus:text-[#F5F5F0] outline-none transition-colors"
                         />
                       </div>
                       <div className="p-2 md:p-3 text-[8px] md:text-[10px] uppercase tracking-tighter opacity-60 font-mono text-center flex items-center justify-center leading-none">
@@ -262,6 +264,7 @@ export default function App() {
                 <li>Select a tab (Dry Stock, Packaging, or Fresh Produce).</li>
                 <li>Enter quantities in the center column.</li>
                 <li>Items with empty, "0", or "-" values will be excluded.</li>
+                <li>Click "Reset Tab" to set all items in the current category to "-".</li>
                 <li>Click "Generate Order" to format the list for messaging.</li>
                 <li>Copy the result and paste it into your messaging app.</li>
               </ul>
