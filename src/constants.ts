@@ -3,6 +3,7 @@ export interface StockItem {
   name: string;
   unit: string;
   category?: string;
+  isDivider?: boolean;
 }
 
 export const DRY_STOCK_ITEMS: StockItem[] = [
@@ -17,14 +18,15 @@ export const DRY_STOCK_ITEMS: StockItem[] = [
   { id: "chicken-powder", name: "Chicken Powder", unit: "Bag" },
   { id: "salted-black-bean", name: "Salted Black Bean", unit: "Pack" },
   { id: "mchef-soy", name: "MChef Soy Sauce GF", unit: "Gallon" },
-  { id: "plum-sauce", name: "Plum Sauce", unit: "Btl" },
-  { id: "baking-powder", name: "Baking Powder", unit: "Tin" },
+  { id: "plum-sauce", name: "Plum Sauce", unit: "Btl" },    
   { id: "g-mountain", name: "G' Mountain (Green Cap)", unit: "Btl" },
   { id: "fish-sauce", name: "Fish Sauce", unit: "Ctn" },
+  { id: "divider-drystock1", name: "---", unit: "", isDivider: true },  
   { id: "cook-tamad", name: "Cook' Tama'd(พันท้าย 454g)", unit: "Ctn" },
   { id: "tomato-sauce", name: "Tomato Sauce", unit: "Gallon" },
   { id: "sweet-chilli", name: "Sweet Chilli Sauce 4.5L", unit: "Gallon" },
   { id: "pantai-paste", name: "Pantai น้ำพริกเผา", unit: "Big Can" },
+  { id: "divider-drystock2", name: "---", unit: "", isDivider: true },
   { id: "cock-massaman", name: "Cock' Massaman", unit: "Tub" },
   { id: "maesri-red", name: "Maesri Red", unit: "Ctn (12 Can)" },
   { id: "maesri-green", name: "Maesri Green", unit: "Ctn (12 Can)" },
@@ -32,6 +34,7 @@ export const DRY_STOCK_ITEMS: StockItem[] = [
   { id: "maesri-panang", name: "Maesri Panang", unit: "Ctn (12 Can)" },
   { id: "prik-khing", name: "Prik khing paste", unit: "Ctn (12 Can)" },
   { id: "chu-chee", name: "Chu Chee Curry Paste", unit: "Ctn (12 Can)" },
+  { id: "baking-powder", name: "Baking Powder", unit: "Tin" },
   { id: "turmeric-powder", name: "Turmuric Powder", unit: "Bag" },
   { id: "cock-tom-yum", name: "Cock' Tom Yum Paste", unit: "Btl" },
   { id: "chilli-garlic", name: "Chilli & Garlic sauce (Ayam)", unit: "Ctn" },
@@ -144,9 +147,33 @@ export const FRESH_PRODUCE_ITEMS: StockItem[] = [
   { id: "mushroom-button", name: "Mushroom (Button)", unit: "Box" },
   { id: "papaya", name: "Papaya", unit: "Head" },
   { id: "pineapple", name: "Pineapple", unit: "Head" },
-  { id: "potatoes-purple", name: "Potatoes (Washed Purple)", unit: "Bag" },
+  { id: "potatoes-purple", name: "Potatoes (Washed)", unit: "Bag" },
   { id: "pumpkin", name: "Pumpkin", unit: "Head" },
   { id: "red-onion", name: "Red Onion", unit: "kg" },
   { id: "shallot", name: "Shallot", unit: "Bag" },
   { id: "egg-700g", name: "Egg (700g)", unit: "Ctn" },
+];
+
+export const CAFE_ITEMS: StockItem[] = [
+  { id: "burger-bun", name: "Burger Bun", unit: "Pack" },
+  { id: "croissant-1", name: "Croissant", unit: "Pack" },
+  { id: "turkish-bread", name: "Turkish Bread", unit: "Pack" },
+  { id: "sandwiches-white", name: "Sandwiches (White)", unit: "Pack" },
+  { id: "sandwiches-wholemeal", name: "Sandwiches (Wholemeal)", unit: "Pack" },
+  { id: "divider-cafe-1", name: "---", unit: "", isDivider: true },
+  { id: "plain-greek-yogurt", name: "Plain Greek Yogurt", unit: "Pack" },
+  { id: "cheese-tasty", name: "Cheese (Tasty)", unit: "Pack" },
+  { id: "butter-sunflower", name: "Butter (Sunflower)", unit: "Tub" },
+  { id: "bacon", name: "Bacon", unit: "Pack" },
+  { id: "ham", name: "Ham", unit: "Pack" },
+  { id: "divider-cafe-2", name: "---", unit: "", isDivider: true },
+  { id: "mixed-salad-cafe", name: "Mixed Salad", unit: "Pack" },
+  { id: "spinach", name: "Spinach", unit: "Pack" },
+  { id: "avocado", name: "Avocado", unit: "Bag" },
+  { id: "divider-cafe-3", name: "---", unit: "", isDivider: true },
+  { id: "spray-oil", name: "Spray Oil", unit: "Can" },
+  { id: "olive-oil", name: "Olive Oil", unit: "Btl" },
+  { id: "hallandaise", name: "Hallandaise", unit: "Btl" },
+  { id: "garlic-aioli", name: "Garlic Aioli", unit: "Btl" },
+  { id: "bbq-smokey", name: "BBQ (Smokey)", unit: "Btl" },
 ];

@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Clipboard, ClipboardCheck, Trash2, Send, Search, Package, Leaf, Box } from 'lucide-react';
-import { DRY_STOCK_ITEMS, PACKAGING_ITEMS, FRESH_PRODUCE_ITEMS } from './constants';
+import { Clipboard, ClipboardCheck, Trash2, Send, Search, Package, Leaf, Box, Coffee } from 'lucide-react';
+import { DRY_STOCK_ITEMS, PACKAGING_ITEMS, FRESH_PRODUCE_ITEMS, CAFE_ITEMS } from './constants';
 
-type TabType = 'dry-stock' | 'packaging' | 'fresh-produce';
+type TabType = 'dry-stock' | 'packaging' | 'fresh-produce' | 'cafe';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('dry-stock');
@@ -24,6 +24,7 @@ export default function App() {
       case 'dry-stock': return DRY_STOCK_ITEMS;
       case 'packaging': return PACKAGING_ITEMS;
       case 'fresh-produce': return FRESH_PRODUCE_ITEMS;
+      case 'cafe': return CAFE_ITEMS;
       default: return [];
     }
   }, [activeTab]);
@@ -44,13 +45,28 @@ export default function App() {
   };
 
   const generateOrder = () => {
-    const tabTitle = activeTab === 'dry-stock' ? 'Dry Stock' : activeTab === 'packaging' ? 'Packaging' : 'Fresh Produce';
-    const orderLines = currentItems
-      .filter(item => {
-        const qty = quantities[item.id];
-        return qty && qty !== '-' && qty !== '0' && qty.trim() !== '';
-      })
-      .map(item => `${item.name}: ${quantities[item.id]} ${item.unit}`);
+    const tabTitle = activeTab === 'dry-stock' ? 'Dry Stock' : activeTab === 'packaging' ? 'Packaging' : activeTab === 'fresh-produce' ? 'Fresh Produce' : 'Cafe';
+    
+    const orderLines: string[] = [];
+    currentItems.forEach(item => {
+      if (item.isDivider) {
+        // Only add a newline if we already have items and the last line isn't already empty
+        if (orderLines.length > 0 && orderLines[orderLines.length - 1] !== "") {
+          orderLines.push("");
+        }
+        return;
+      }
+      
+      const qty = quantities[item.id];
+      if (qty && qty !== '-' && qty !== '0' && qty.trim() !== '') {
+        orderLines.push(`${item.name}: ${qty} ${item.unit}`);
+      }
+    });
+
+    // Clean up trailing empty lines
+    while (orderLines.length > 0 && orderLines[orderLines.length - 1] === "") {
+      orderLines.pop();
+    }
 
     if (orderLines.length === 0) {
       setGeneratedText(`No items selected for the ${tabTitle} order.`);
@@ -87,6 +103,7 @@ export default function App() {
     { id: 'dry-stock' as TabType, label: 'Dry Stock', icon: Box },
     { id: 'packaging' as TabType, label: 'Packaging', icon: Package },
     { id: 'fresh-produce' as TabType, label: 'Fresh Produce', icon: Leaf },
+    { id: 'cafe' as TabType, label: 'Cafe', icon: Coffee },
   ];
 
   return (
@@ -161,24 +178,30 @@ export default function App() {
                   transition={{ duration: 0.2 }}
                 >
                   {filteredItems.map((item) => (
-                    <div key={item.id} className="grid grid-cols-[1fr_70px_70px] md:grid-cols-[1fr_80px_80px] border-b border-[#026877] hover:bg-[#F5F5F0] transition-colors group">
-                      <div className="p-2 md:p-3 text-xs md:text-sm border-r border-[#026877] flex items-center leading-tight">
-                        {item.name}
+                    item.isDivider ? (
+                      <div key={item.id} className="bg-[#E4E3E0] border-b border-[#026877] py-1 px-3 flex items-center justify-center">
+                        <div className="h-[1px] bg-[#026877] w-full opacity-20"></div>
                       </div>
-                      <div className="p-0 border-r border-[#026877]">
-                        <input
-                          type="text"
-                          inputMode="decimal"
-                          placeholder="-"
-                          value={quantities[item.id] || ''}
-                          onChange={(e) => handleQuantityChange(item.id, e.target.value)}
-                          className="w-full h-full p-2 md:p-3 text-center text-base md:text-sm font-mono focus:bg-[#026877] focus:text-[#F5F5F0] outline-none transition-colors"
-                        />
+                    ) : (
+                      <div key={item.id} className="grid grid-cols-[1fr_70px_70px] md:grid-cols-[1fr_80px_80px] border-b border-[#026877] hover:bg-[#F5F5F0] transition-colors group">
+                        <div className="p-2 md:p-3 text-xs md:text-sm border-r border-[#026877] flex items-center leading-tight">
+                          {item.name}
+                        </div>
+                        <div className="p-0 border-r border-[#026877]">
+                          <input
+                            type="text"
+                            inputMode="decimal"
+                            placeholder="-"
+                            value={quantities[item.id] || ''}
+                            onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                            className="w-full h-full p-2 md:p-3 text-center text-base md:text-sm font-mono focus:bg-[#026877] focus:text-[#F5F5F0] outline-none transition-colors"
+                          />
+                        </div>
+                        <div className="p-2 md:p-3 text-[8px] md:text-[10px] uppercase tracking-tighter opacity-60 font-mono text-center flex items-center justify-center leading-none">
+                          {item.unit}
+                        </div>
                       </div>
-                      <div className="p-2 md:p-3 text-[8px] md:text-[10px] uppercase tracking-tighter opacity-60 font-mono text-center flex items-center justify-center leading-none">
-                        {item.unit}
-                      </div>
-                    </div>
+                    )
                   ))}
                 </motion.div>
               </AnimatePresence>
@@ -261,7 +284,7 @@ export default function App() {
             <div className="bg-[#E4E3E0] p-3 md:p-4 border border-[#026877] text-[10px] md:text-[11px] font-mono leading-tight">
               <p className="uppercase font-bold mb-2">Instructions:</p>
               <ul className="list-disc list-inside space-y-1 opacity-70">
-                <li>Select a tab (Dry Stock, Packaging, or Fresh Produce).</li>
+                <li>Select a tab (Dry Stock, Packaging, Fresh Produce, or Cafe).</li>
                 <li>Enter quantities in the center column.</li>
                 <li>Items with empty, "0", or "-" values will be excluded.</li>
                 <li>Click "Reset Tab" to set all items in the current category to "-".</li>
