@@ -1,0 +1,31 @@
+{
+  "entities": {
+    "TabQuantities": {
+      "title": "TabQuantities",
+      "description": "Stores the quantities for a specific stock category tab.",
+      "type": "object",
+      "properties": {
+        "quantities": {
+          "type": "object",
+          "description": "A map of item IDs to their quantity values."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the quantities were last updated."
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "The UID of the user who last updated the quantities."
+        }
+      },
+      "required": ["quantities", "updatedAt", "updatedBy"]
+    }
+  },
+  "firestore": {
+    "/quantities/{tabId}": {
+      "schema": "TabQuantities",
+      "description": "Collection storing stock quantities per tab."
+    }
+  }
+}

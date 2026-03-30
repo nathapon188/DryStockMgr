@@ -6,7 +6,10 @@ import { DRY_STOCK_ITEMS, PACKAGING_ITEMS, FRESH_PRODUCE_ITEMS, CAFE_ITEMS } fro
 type TabType = 'dry-stock' | 'packaging' | 'fresh-produce' | 'cafe';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabType>('dry-stock');
+  const [activeTab, setActiveTab] = useState<TabType>(() => {
+    const saved = localStorage.getItem('tamrab_thai_active_tab');
+    return (saved as TabType) || 'dry-stock';
+  });
   const [quantities, setQuantities] = useState<Record<string, string>>(() => {
     const saved = localStorage.getItem('tamrab_thai_quantities');
     return saved ? JSON.parse(saved) : {};
@@ -16,6 +19,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('tamrab_thai_quantities', JSON.stringify(quantities));
   }, [quantities]);
+
+  useEffect(() => {
+    localStorage.setItem('tamrab_thai_active_tab', activeTab);
+  }, [activeTab]);
   const [isCopied, setIsCopied] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -73,7 +80,15 @@ export default function App() {
       return;
     }
 
-    const header = `${tabTitle} Order\n-------------------\n`;
+    const now = new Date();
+    const dateString = now.toLocaleDateString('en-AU', { 
+      weekday: 'long', 
+      day: 'numeric', 
+      month: 'long', 
+      year: 'numeric' 
+    });
+
+    const header = `${tabTitle} Order\nDate: ${dateString}\n-------------------\n`;
     const footer = "\n-------------------\nThank you,\nNat";
     setGeneratedText(header + orderLines.join('\n') + footer);
   };
@@ -290,6 +305,7 @@ export default function App() {
                 <li>Click "Reset Tab" to set all items in the current category to "-".</li>
                 <li>Click "Generate Order" to format the list for messaging.</li>
                 <li>Copy the result and paste it into your messaging app.</li>
+                <li className="text-[#026877] font-bold">Note: All quantities are saved automatically on your device.</li>
               </ul>
             </div>
           </section>
