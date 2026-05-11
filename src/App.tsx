@@ -88,7 +88,7 @@ export default function App() {
       year: 'numeric' 
     });
 
-    const header = `${tabTitle} Order\nDate: ${dateString}\n-------------------\n`;
+    const header = `${tabTitle} Order\nDate: ${dateString}\nFor Thursday Delivery\n-------------------\n`;
     const footer = "\n-------------------\nThank you,\nNat";
     setGeneratedText(header + orderLines.join('\n') + footer);
   };
