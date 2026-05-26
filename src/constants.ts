@@ -41,6 +41,7 @@ export const DRY_STOCK_ITEMS: StockItem[] = [
   { id: "galangal-sliced", name: "Galangal Sliced", unit: "Jar" },
   { id: "dried-fungus", name: "Dried Black Fungus (1kg)", unit: "Bag" },
   { id: "pig-kong-stick", name: "Pig'n Kongm'n R/Stick", unit: "Pack" },
+  { id: "coconut-shreded", name: "Shreded Coconut", unit: "Bag (1kg)" },
   { id: "frozen-chilli", name: "Frozen Chilli (No Stem)", unit: "Pack" },
   { id: "dried-chilli", name: "Dried Chilli", unit: "Kg" },
   { id: "sen-yai", name: "เส้นใหญ่(ตัดแล้ว)", unit: "Pack" },

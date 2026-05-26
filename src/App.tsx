@@ -88,7 +88,8 @@ export default function App() {
       year: 'numeric' 
     });
 
-    const header = `${tabTitle} Order\nDate: ${dateString}\nFor Thursday Delivery\n-------------------\n`;
+    const headerTitle = activeTab === 'dry-stock' ? 'Tamrab Thai Taringa' : `${tabTitle} Order`;
+    const header = `${headerTitle}\nDate: ${dateString}\nFor Thursday Delivery\n-------------------\n`;
     const footer = "\n-------------------\nThank you,\nNat";
     setGeneratedText(header + orderLines.join('\n') + footer);
   };
