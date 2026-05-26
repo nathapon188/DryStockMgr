@@ -100,9 +100,9 @@ export const DRY_STOCK_ITEMS: StockItem[] = [
 export const PACKAGING_ITEMS: StockItem[] = [
   { id: "bcb-kraft-small", name: "BCB TM Kraft Small", unit: "Ctn" },
   { id: "bcb-kraft-medium", name: "BCB TM Kraft Medium", unit: "Ctn" },
-  { id: "paper-towel", name: "Paper Towel 24x24 cm", unit: "Ctn" },
-  { id: "sauce-30cc", name: "30cc Hinged Lid Sauce Container", unit: "Ctn" },
+  { id: "paper-towel", name: "Paper Towel 24x24 cm", unit: "Ctn" },  
   { id: "sauce-25cc", name: "25cc Hinged Lid Sauce Container", unit: "Ctn" },
+  { id: "sauce-30cc", name: "30cc Hinged Lid Sauce Container", unit: "Ctn" },
   { id: "tray-clam", name: "Plastic Tray Clam (3H)", unit: "Ctn" },
   { id: "lid-rect", name: "Lid Rectangular", unit: "Ctn" },
   { id: "rect-500", name: "500 Rectangular", unit: "Ctn" },
@@ -111,7 +111,7 @@ export const PACKAGING_ITEMS: StockItem[] = [
   { id: "bowl-750", name: "750 Kraft Bowl", unit: "Spool" },
   { id: "bowl-PP", name: "PP Lid Kraft Bowl", unit: "Spool" },
   { id: "plastic-bag-m", name: "Plastic Bag (M)", unit: "Pack" },
-  { id: "fruit-cup", name: "Fruit Cup no.9", unit: "Spool" },
+  { id: "fruit-cup", name: "Fruit Cup 10oz", unit: "Spool" },
   { id: "fruit-cup-lid", name: "Fruit Cup Dome Lid", unit: "Spool" },
   { id: "napkin-white", name: "Quilted Dinner Napkin GT Fold White", unit: "Ctn" },
   { id: "sandwich-wedge", name: "(M) BioBoard Sandwich Wedge", unit: "Pack" },
@@ -139,6 +139,7 @@ export const FRESH_PRODUCE_ITEMS: StockItem[] = [
   { id: "green-bean", name: "Green Bean", unit: "Ctn" },
   { id: "ginger-pc", name: "Ginger", unit: "Pc" },
   { id: "kailan", name: "Kailan", unit: "Bunch" },
+  { id: "kangkong", name: "Kangkong (Water Spinach)", unit: "Bunch" },
   { id: "lemon", name: "Lemon", unit: "Ctn" },
   { id: "lemongrass", name: "Lemongrass", unit: "Bunch" },
   { id: "lime-cocktails", name: "Lime (for Cocktails)", unit: "Ctn" },
@@ -147,11 +148,13 @@ export const FRESH_PRODUCE_ITEMS: StockItem[] = [
   { id: "mushroom-button", name: "Mushroom (Button)", unit: "Box" },
   { id: "papaya", name: "Papaya", unit: "Head" },
   { id: "pineapple", name: "Pineapple", unit: "Head" },
-  { id: "potatoes-purple", name: "Potatoes (Washed)", unit: "Bag" },
+  { id: "potatoes", name: "Potatoes (Washed)", unit: "Bag" },
   { id: "pumpkin", name: "Pumpkin", unit: "Head" },
   { id: "red-onion", name: "Red Onion", unit: "kg" },
   { id: "shallot", name: "Shallot", unit: "Bag" },
-  { id: "egg-700g", name: "Egg (700g)", unit: "Ctn" },
+  { id: "tomatoes", name: "Tomatoes", unit: "Bag" },
+  { id: "divider-veggie-1", name: "---", unit: "", isDivider: true },
+  { id: "egg-700g", name: "Egg (700g)", unit: "Ctn" }
 ];
 
 export const CAFE_ITEMS: StockItem[] = [
@@ -160,6 +163,7 @@ export const CAFE_ITEMS: StockItem[] = [
   { id: "turkish-bread", name: "Turkish Bread", unit: "Pack" },
   { id: "sandwiches-white", name: "Sandwiches (White)", unit: "Pack" },
   { id: "sandwiches-wholemeal", name: "Sandwiches (Wholemeal)", unit: "Pack" },
+  { id: "sandwiches-glutee-free", name: "Sandwiches (GF)", unit: "Pack" },
   { id: "divider-cafe-1", name: "---", unit: "", isDivider: true },
   { id: "plain-greek-yogurt", name: "Plain Greek Yogurt", unit: "Pack" },
   { id: "cheese-tasty", name: "Cheese (Tasty)", unit: "Pack" },
