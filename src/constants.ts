@@ -61,6 +61,7 @@ export const DRY_STOCK_ITEMS: StockItem[] = [
   { id: "pineapple-pieces", name: "Pineapple Pieces", unit: "Ctn" },
   { id: "bamboo-shoots", name: "Sliced Bamboo Shoots", unit: "Ctn" },
   { id: "cashew-nuts", name: "Cashew Nuts (Big Bag)", unit: "Bag" },
+  { id: "divider-drystock6", name: "---", unit: "", isDivider: true },
   { id: "floor-cleaner", name: "Big Red Floor Cleaner", unit: "Cube" },
   { id: "chocolate-topping", name: "Chocolate Topping (3L Cottees)", unit: "Btl" },
   { id: "caramel-topping", name: "Caramel Topping (3L Cottees)", unit: "Btl" },
@@ -90,15 +91,16 @@ export const DRY_STOCK_ITEMS: StockItem[] = [
   { id: "turner", name: "Turner (ตะหลิวยาว)", unit: "Unit" },
   { id: "dishwasher-machine", name: "Dishwasher [For Machine] (20L)", unit: "Cube" },
   { id: "dishwasher-hand", name: "Dishwasher [By Hand] (20L)", unit: "Cube" },
-  { id: "palm-sugar", name: "Cock Palm Sugar", unit: "Ctn" },
+  { id: "palm-sugar", name: "Cock' Palm Sugar", unit: "Ctn" },
   { id: "oven-cleaner", name: "Oven Cleaner", unit: "Gallon" },
   { id: "honey", name: "Honey (3L Blossom Pure)", unit: "Btl" },
   { id: "gloves-m", name: "Powdered Gloved (M)", unit: "Ctn" },
 ];
 
 export const PACKAGING_ITEMS: StockItem[] = [
-  { id: "bcb-kraft-small", name: "BCB TM Kraft Small", unit: "Ctn" },
-  { id: "bcb-kraft-medium", name: "BCB TM Kraft Medium", unit: "Ctn" },
+  { id: "bcb-kraft-small", name: "Paper Bag Kraft Twisted Handle Small", unit: "Ctn" },
+  { id: "bcb-kraft-medium", name: "Paper Bag Kraft Twisted Handle Medium", unit: "Ctn" },
+  { id: "bcb-kraft-uber", name: "Uber Bag", unit: "Ctn" },
   { id: "paper-towel", name: "Paper Towel 24x24 cm", unit: "Ctn" },  
   { id: "sauce-25cc", name: "25cc Hinged Lid Sauce Container", unit: "Ctn" },
   { id: "sauce-30cc", name: "30cc Hinged Lid Sauce Container", unit: "Ctn" },
