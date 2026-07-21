@@ -98,6 +98,7 @@ export const DRY_STOCK_ITEMS: StockItem[] = [
 ];
 
 export const PACKAGING_ITEMS: StockItem[] = [
+  { id: "uncoated-tray", name: "#1 Uncoat Paper Tray 95x55x35mm", unit: "Spool" },
   { id: "bcb-kraft-small", name: "Paper Bag Kraft Twisted Handle Small", unit: "Ctn" },
   { id: "bcb-kraft-medium", name: "Paper Bag Kraft Twisted Handle Medium", unit: "Ctn" },
   { id: "bcb-kraft-uber", name: "Uber Bag", unit: "Ctn" },
