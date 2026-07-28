@@ -75,6 +75,7 @@ export const DRY_STOCK_ITEMS: StockItem[] = [
   { id: "water-chestnut", name: "Water Chestnut", unit: "Big Can" },
   { id: "breadcrumbs", name: "Fine Breadcrumbs", unit: "kg" },
   { id: "cling-wrap", name: "Cling Wrap (33cm)", unit: "Unit" },
+  { id: "skewer", name: "Bamboo Skewer 6\"", unit: "Unit" },
   { id: "white-pepper", name: "White Pepper", unit: "Bag" },
   { id: "wok-brush", name: "Wok Brush Standard", unit: "Unit" },
   { id: "kiwi-knife-171", name: "Kiwi Knife 171", unit: "Unit" },
@@ -95,7 +96,9 @@ export const DRY_STOCK_ITEMS: StockItem[] = [
   { id: "palm-sugar", name: "Cock' Palm Sugar", unit: "Ctn" },
   { id: "oven-cleaner", name: "Oven Cleaner", unit: "Gallon" },
   { id: "honey", name: "Honey (3L Blossom Pure)", unit: "Btl" },
-  { id: "gloves-m", name: "Powdered Gloved (M)", unit: "Ctn" },
+  { id: "gloves-s", name: "Powdered Gloved (S)", unit: "Box" },
+  { id: "gloves-m", name: "Powdered Gloved (M)", unit: "Box" },
+  { id: "gloves-l", name: "Powdered Gloved (L)", unit: "Box" },
 ];
 
 export const PACKAGING_ITEMS: StockItem[] = [
@@ -126,7 +129,9 @@ export const PACKAGING_ITEMS: StockItem[] = [
   { id: "straw2", name: "10mm Jumbo Paper Straws", unit: "Pack" },   
   { id: "napkin-white", name: "Quilted Dinner Napkin GT Fold White", unit: "Ctn" },
   { id: "sandwich-wedge", name: "(M) BioBoard Sandwich Wedge", unit: "Pack" },
-  { id: "snackbox", name: "(M) BioBoard Regular Snackbox", unit: "Pack" },
+  { id: "knotted-skewer", name: "90mm Knotted Skewer (Fruit)", unit: "Pack" },
+  { id: "paddle-skewer1", name: "105mm Paddle Skewer (Club Sandwich)", unit: "Pack" },
+  { id: "paddle-skewer2", name: "150mm Paddle Skewer (Moo Ping)", unit: "Pack" },
   { id: "bin-liner-82l", name: "82L Heavy Duty Bin Liner", unit: "Ctn" },
 ];
 
