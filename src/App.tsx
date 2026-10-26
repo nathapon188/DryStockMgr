@@ -14,13 +14,21 @@ export default function App() {
     const saved = localStorage.getItem('tamrab_thai_quantities');
     return saved ? JSON.parse(saved) : {};
   });
+  const [selectedUnits, setSelectedUnits] = useState<Record<string, string>>(() => {
+    const saved = localStorage.getItem('tamrab_thai_units');
+    return saved ? JSON.parse(saved) : {};
+  });
   const [generatedText, setGeneratedText] = useState<string>('');
-  
+
   const isNewFocus = useRef<Record<string, boolean>>({});
 
   useEffect(() => {
     localStorage.setItem('tamrab_thai_quantities', JSON.stringify(quantities));
   }, [quantities]);
+
+  useEffect(() => {
+    localStorage.setItem('tamrab_thai_units', JSON.stringify(selectedUnits));
+  }, [selectedUnits]);
 
   useEffect(() => {
     localStorage.setItem('tamrab_thai_active_tab', activeTab);
@@ -111,7 +119,7 @@ export default function App() {
       
       const qty = quantities[item.id];
       if (qty && qty !== '-' && qty !== '0' && qty.trim() !== '') {
-        orderLines.push(`${item.name}: ${qty} ${item.unit}`);
+        orderLines.push(`${item.name}: ${qty} ${selectedUnits[item.id] || item.unit}`);
       }
     });
 
@@ -265,9 +273,23 @@ export default function App() {
                             className="w-full h-full p-2 md:p-3 text-center text-base md:text-sm font-mono focus:bg-[#026877] focus:text-[#F5F5F0] outline-none transition-colors"
                           />
                         </div>
-                        <div className="p-2 md:p-3 text-[8px] md:text-[10px] uppercase tracking-tighter opacity-60 font-mono text-center flex items-center justify-center leading-none">
-                          {item.unit}
-                        </div>
+                        {item.units ? (
+                          <div className="p-0">
+                            <select
+                              value={selectedUnits[item.id] || item.unit}
+                              onChange={(e) => setSelectedUnits(prev => ({ ...prev, [item.id]: e.target.value }))}
+                              className="w-full h-full px-1 text-[10px] md:text-[11px] uppercase font-mono font-bold text-center bg-[#F5F5F0] outline-none cursor-pointer focus:bg-[#026877] focus:text-[#F5F5F0]"
+                            >
+                              {item.units.map(u => (
+                                <option key={u} value={u}>{u}</option>
+                              ))}
+                            </select>
+                          </div>
+                        ) : (
+                          <div className="p-2 md:p-3 text-[8px] md:text-[10px] uppercase tracking-tighter opacity-60 font-mono text-center flex items-center justify-center leading-none">
+                            {item.unit}
+                          </div>
+                        )}
                       </div>
                     )
                   ))}

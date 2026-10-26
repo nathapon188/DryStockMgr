@@ -2,6 +2,7 @@ export interface StockItem {
   id: string;
   name: string;
   unit: string;
+  units?: string[]; // Selectable units; `unit` is the default
   category?: string;
   isDivider?: boolean;
 }
@@ -142,7 +143,7 @@ export const FRESH_PRODUCE_ITEMS: StockItem[] = [
   { id: "brown-onion", name: "Brown Onion", unit: "Bag" },  
   { id: "cabbage-white", name: "Cabbage (White)", unit: "Head" },
   { id: "capsicum-red", name: "Capsicum (Red)", unit: "Ctn" },
-  { id: "carrot", name: "Carrot", unit: "Ctn" },
+  { id: "carrot", name: "Carrot", unit: "Ctn", units: ["Ctn", "Bag"] },
   { id: "cherry-tomato", name: "Cherry Tomato", unit: "Punnet" },
   { id: "chilli-red", name: "Chilli (Red Cayenne)", unit: "kg" },
   { id: "chives", name: "Chives", unit: "Bunch" },
